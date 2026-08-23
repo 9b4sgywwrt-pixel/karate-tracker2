@@ -1,18 +1,18 @@
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { ComponentProps, PropsWithChildren } from 'react';
-import { Pressable, StyleSheet, View } from 'react-native';
+import { Pressable, PressableProps, StyleSheet, View } from 'react-native';
 import { radius, spacing } from '@/constants/theme';
 import { useAppTheme } from '@/hooks/use-app-theme';
 import { AppText } from './app-text';
 
 type IconName = ComponentProps<typeof MaterialCommunityIcons>['name'];
-export function IconButton({ icon, label }: { icon: IconName; label: string }) {
+export function IconButton({ icon, label, onPress, symbol }: { icon: IconName; label: string; onPress?: PressableProps['onPress']; symbol?: string }) {
   const { colors } = useAppTheme();
-  return <Pressable accessibilityRole="button" accessibilityLabel={label} style={({ pressed }) => [styles.iconButton, { backgroundColor: colors.surface, borderColor: colors.border, opacity: pressed ? 0.65 : 1 }]}><MaterialCommunityIcons name={icon} size={21} color={colors.text} /></Pressable>;
+  return <Pressable accessibilityRole="button" accessibilityLabel={label} onPress={onPress} style={({ pressed }) => [styles.iconButton, { backgroundColor: colors.surface, borderColor: colors.border, opacity: pressed ? 0.65 : 1 }]}>{symbol ? <AppText variant="heading" weight="bold" color={colors.text}>{symbol}</AppText> : <MaterialCommunityIcons name={icon} size={21} color={colors.text} />}</Pressable>;
 }
-export function PrimaryButton({ children, icon = 'plus' }: PropsWithChildren<{ icon?: IconName }>) {
+export function PrimaryButton({ children, icon = 'plus', onPress, disabled = false }: PropsWithChildren<{ icon?: IconName; onPress?: PressableProps['onPress']; disabled?: boolean }>) {
   const { colors } = useAppTheme();
-  return <Pressable accessibilityRole="button" style={({ pressed }) => [styles.primaryButton, { backgroundColor: colors.primary, opacity: pressed ? 0.8 : 1 }]}><MaterialCommunityIcons name={icon} size={20} color={colors.onPrimary} /><AppText weight="bold" color={colors.onPrimary}>{children}</AppText></Pressable>;
+  return <Pressable accessibilityRole="button" accessibilityState={{ disabled }} disabled={disabled} onPress={onPress} style={({ pressed }) => [styles.primaryButton, { backgroundColor: colors.primary, opacity: disabled ? 0.55 : pressed ? 0.8 : 1 }]}><MaterialCommunityIcons name={icon} size={20} color={colors.onPrimary} /><AppText weight="bold" color={colors.onPrimary}>{children}</AppText></Pressable>;
 }
 export function ChoiceChip({ label, selected = false, onPress }: { label: string; selected?: boolean; onPress?: () => void }) {
   const { colors } = useAppTheme();

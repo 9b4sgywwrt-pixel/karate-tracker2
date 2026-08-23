@@ -1,4 +1,5 @@
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import { useRouter } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
 import { AppText } from '@/components/ui/app-text';
 import { Card } from '@/components/ui/card';
@@ -8,8 +9,11 @@ import { Screen } from '@/components/ui/screen';
 import { radius, spacing } from '@/constants/theme';
 import { useAppTheme } from '@/hooks/use-app-theme';
 
-export default function HomeScreen() {
+export { default } from '@/features/home-screen';
+
+export function LegacyHomeScreen() {
   const { colors } = useAppTheme();
+  const router = useRouter();
   return <Screen eyebrow="Saturday, 22 August" title="Good morning" subtitle="Ready for your next session?" action={<IconButton icon="cog-outline" label="Settings" />}>
     <Card style={[s.hero, { backgroundColor: colors.hero, borderColor: colors.hero }]}>
       <View style={s.row}><View><AppText variant="label" weight="bold" color={colors.onHeroMuted}>THIS WEEK</AppText><AppText variant="display" weight="bold" color={colors.onHero} style={s.value}>3 hr 15 min</AppText></View><View style={[s.fire, { backgroundColor: colors.primary }]}><MaterialCommunityIcons name="fire" size={23} color={colors.onPrimary} /></View></View>
@@ -22,7 +26,7 @@ export default function HomeScreen() {
     <Event date="MON 24" title="Karate" detail="6:00 pm · Weekly schedule" />
     <SectionHeader title="Upcoming event" />
     <Event date="12 SEP" title="Spring grading" detail="Saturday · 9:00 am" success />
-    <View style={s.button}><PrimaryButton>Log training</PrimaryButton></View>
+    <View style={s.button}><PrimaryButton onPress={() => router.navigate('/log')}>Log training</PrimaryButton></View>
   </Screen>;
 }
 

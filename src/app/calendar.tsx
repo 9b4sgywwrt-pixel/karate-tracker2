@@ -8,12 +8,14 @@ import { Screen } from '@/components/ui/screen';
 import { radius, spacing } from '@/constants/theme';
 import { useAppTheme } from '@/hooks/use-app-theme';
 
+export { default } from '@/features/calendar-screen';
+
 type IconName = ComponentProps<typeof MaterialCommunityIcons>['name'];
 const days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
 const dates = Array.from({ length: 35 }, (_, index) => index < 5 ? 27 + index : index - 4);
 const marked = new Set([7, 9, 19, 21, 23, 26]);
 
-export default function CalendarScreen() {
+export function LegacyCalendarScreen() {
   const { colors } = useAppTheme();
   return <Screen title="Calendar" subtitle="Plans, progress and important dates" action={<IconButton icon="plus" label="Add calendar item" />}>
     <Card><View style={s.month}><MaterialCommunityIcons name="chevron-left" size={25} color={colors.textMuted} /><AppText variant="heading" weight="bold">August 2026</AppText><MaterialCommunityIcons name="chevron-right" size={25} color={colors.textMuted} /></View>
@@ -28,11 +30,11 @@ export default function CalendarScreen() {
 }
 function Event({ icon, title, detail, status, color }: { icon: IconName; title: string; detail: string; status: string; color: string }) {
   const { colors } = useAppTheme();
-  return <Card style={s.event}><View style={[s.eventIcon, { backgroundColor: colors.surfaceMuted }]}><MaterialCommunityIcons name={icon} size={22} color={color} /></View><View style={s.copy}><AppText weight="bold">{title}</AppText><AppText variant="caption" color={colors.textMuted}>{detail}</AppText></View><View style={[s.status, { borderColor: color }]}><AppText variant="caption" weight="bold" color={color}>{status}</AppText></View></Card>;
+  return <Card style={s.event}><View style={[s.eventIcon, { backgroundColor: colors.surfaceMuted }]}><MaterialCommunityIcons name={icon} size={22} color={color} /></View><View style={s.copy}><AppText weight="bold">{title}</AppText><AppText variant="caption" color={colors.textMuted}>{detail}</AppText><View style={[s.status, { borderColor: color }]}><AppText variant="caption" weight="bold" color={color}>{status}</AppText></View></View></Card>;
 }
 const s = StyleSheet.create({
   month: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: spacing.lg }, week: { flexDirection: 'row' }, day: { width: '14.285%', textAlign: 'center' },
   grid: { flexDirection: 'row', flexWrap: 'wrap', marginTop: spacing.sm }, cell: { width: '14.285%', height: 47, alignItems: 'center' }, circle: { width: 32, height: 32, borderRadius: 16, alignItems: 'center', justifyContent: 'center' },
   dot: { width: 4, height: 4, borderRadius: 2, marginTop: 2 }, switcher: { flexDirection: 'row', gap: spacing.sm, marginTop: spacing.lg }, event: { flexDirection: 'row', alignItems: 'center', gap: spacing.md },
-  eventIcon: { width: 46, height: 46, borderRadius: radius.md, alignItems: 'center', justifyContent: 'center' }, copy: { flex: 1, gap: 3 }, status: { borderWidth: 1, borderRadius: radius.pill, paddingHorizontal: spacing.sm, paddingVertical: spacing.xs },
+  eventIcon: { width: 46, height: 46, borderRadius: radius.md, alignItems: 'center', justifyContent: 'center' }, copy: { flex: 1, minWidth: 0, gap: 3 }, status: { alignSelf: 'flex-start', borderWidth: 1, borderRadius: radius.pill, paddingHorizontal: spacing.sm, paddingVertical: spacing.xs, marginTop: spacing.xs },
 });

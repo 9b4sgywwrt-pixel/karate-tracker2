@@ -15,7 +15,9 @@ const sessions: { day: string; art: string; focus: string; extra: string; durati
   { day: 'MONDAY, 17 AUGUST', art: 'Kobudo', focus: 'Bo', extra: '', duration: '45 min', note: 'Bo kihon and kata', icon: 'sword-cross' },
 ];
 
-export default function DiaryScreen() {
+export { default } from '@/features/diary-screen';
+
+export function LegacyDiaryScreen() {
   const { colors } = useAppTheme();
   return <Screen title="Training diary" subtitle="Your practice, one session at a time" action={<IconButton icon="tune-variant" label="Open filters" />}>
     <View style={[s.search, { backgroundColor: colors.surface, borderColor: colors.border }]}><MaterialCommunityIcons name="magnify" size={21} color={colors.textMuted} /><TextInput accessibilityLabel="Search training diary" placeholder="Search notes and focuses" placeholderTextColor={colors.textMuted} style={[s.input, { color: colors.text }]} /></View>

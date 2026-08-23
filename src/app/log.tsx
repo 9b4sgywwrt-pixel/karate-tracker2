@@ -11,7 +11,9 @@ import { useAppTheme } from '@/hooks/use-app-theme';
 const focuses = { Karate: ['Kihon', 'Kata', 'Bunkai', 'Kumite'], BJJ: ['Technique', 'Drilling', 'Positional', 'Rolling'], Kobudo: ['Bo', 'Sai', 'Tonfa', 'Kama', 'Nunchaku', 'Arnis', 'Other'] };
 type Art = keyof typeof focuses;
 
-export default function LogScreen() {
+export { default } from '@/features/log-screen';
+
+export function LegacyLogScreen() {
   const { colors } = useAppTheme();
   const [art, setArt] = useState<Art>('Karate');
   const [primary, setPrimary] = useState('Kata');
